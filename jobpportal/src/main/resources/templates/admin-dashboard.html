@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> <style>
+    /* Basic styling for error messages (can be in your css/style.css) */
+    .error-message {
+        color: red;
+        margin-bottom: 15px;
+    }
+</style>
+</head>
+<body>
+<h2>Admin Dashboard</h2>
+
+<p>Welcome, <span sec:authentication="name">Admin</span>!</p>
+
+<div th:if="${param.unauthorized}" class="error-message">
+    <p>You are not authorized to view applications for that job.</p>
+</div>
+
+<div th:if="${param.jobNotFound}" class="error-message">
+    <p>The job you were trying to view applications for was not found.</p>
+</div>
+
+
+<h3>Your Posted Jobs</h3>
+
+<div th:if="${#lists.isEmpty(jobs)}">
+    <p>You haven't posted any jobs yet.</p>
+</div>
+<div th:unless="${#lists.isEmpty(jobs)}">
+    <ul>
+        <li th:each="job : ${jobs}">
+            <span th:text="${job.title}">Job Title</span> - <a th:href="@{/admin/view-applications/{id}(id=${job.id})}">View Applications</a>
+        </li>
+    </ul>
+</div>
+
+<div>
+    <p><a th:href="@{/admin/add-job}">Add New Job</a></p>
+    <p><a th:href="@{/}">Back to Home (Public View)</a></p>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+</body>
+</html>

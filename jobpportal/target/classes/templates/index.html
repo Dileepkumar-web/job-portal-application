@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+    <title>Job Portal</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> <style>
+    /* Basic styling */
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    .error-message { color: red; }
+    .success-message { color: green; }
+</style>
+</head>
+<body>
+<h2>Welcome to the Job Portal</h2>
+
+<div sec:authorize="isAuthenticated()">
+    <p>You are logged in as <span sec:authentication="name"></span>.</p>
+    <div sec:authorize="hasRole('ADMIN')">
+        <p><a th:href="@{/admin/dashboard}">Go to Admin Dashboard</a></p>
+    </div>
+    <div sec:authorize="hasRole('USER')">
+        <p><a th:href="@{/user/dashboard}">Go to User Dashboard</a></p>
+    </div>
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Logout</button>
+    </form>
+</div>
+
+<div sec:authorize="isAnonymous()">
+    <p>Please log in or register:</p>
+    <p><a th:href="@{/login-user}">User Login</a></p>
+    <p><a th:href="@{/login-admin}">Admin Login</a></p>
+    <p><a th:href="@{/register-user}">Register as User</a></p>
+    <p><a th:href="@{/register-admin}">Register as Admin</a></p>
+</div>
+</body>
+</html>

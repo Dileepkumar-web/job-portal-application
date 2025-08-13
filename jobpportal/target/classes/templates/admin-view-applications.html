@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Applications for ' + ${jobTitle}">Applications</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> </head>
+<body>
+<h2 th:text="'Applications for &quot;' + ${jobTitle} + '&quot;'">Applications for Job Title</h2>
+
+<div th:if="${#lists.isEmpty(applications)}">
+    <p>No applications submitted for this job yet.</p>
+</div>
+<div th:unless="${#lists.isEmpty(applications)}">
+    <ul>
+        <li th:each="application : ${applications}">
+            <p><strong>Applicant:</strong> <span th:text="${application.applicant.username}">User Name</span></p>
+            <p><strong>Applied On:</strong> <span th:text="${#temporals.format(application.applicationDate, 'yyyy-MM-dd HH:mm')}">Date</span></p>
+            <div th:if="${application.coverLetter != null and !application.coverLetter.isEmpty()}">
+                <p><strong>Cover Letter:</strong></p>
+                <p th:text="${application.coverLetter}"></p>
+            </div>
+            <hr/> </li>
+    </ul>
+</div>
+
+<p><a th:href="@{/admin/dashboard}">Back to Admin Dashboard</a></p>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>

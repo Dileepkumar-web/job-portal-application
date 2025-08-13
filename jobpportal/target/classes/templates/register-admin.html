@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Admin Registration</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> </head>
+<body>
+<h2>Admin Registration</h2>
+
+<div th:if="${registrationError}" class="error-message">
+    <p th:text="${registrationError}"></p>
+</div>
+
+<form th:action="@{/register-admin}" th:object="${user}" method="post">
+    <div>
+        <label for="username">Username (Admin):</label>
+        <input type="text" id="username" th:field="*{username}" required/>
+    </div>
+    <div>
+        <label for="password">Password:</label>
+        <input type="password" id="password" th:field="*{password}" required/>
+    </div>
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+    <div>
+        <button type="submit">Register Admin</button>
+    </div>
+</form>
+
+<p><a th:href="@{/login-admin}">Already have an admin account? Login Here</a></p>
+<p><a th:href="@{/}">Back to Home</a></p>
+
+<style>
+    /* Basic styling for messages (can be in your css/style.css) */
+    .error-message {
+        color: red;
+        margin-bottom: 15px;
+    }
+    .success-message {
+        color: green;
+        margin-bottom: 15px;
+    }
+</style>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/springsecurity6">
+<head>
+    <title>User Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" /> </head>
+<body>
+<h2>User Dashboard</h2>
+<p>Welcome, <span sec:authentication="name">User</span>!</p>
+
+<p><a th:href="@{/user/view-jobs}">View Available Jobs</a></p>
+<p><a th:href="@{/}">Back to Home (Public View)</a></p>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>

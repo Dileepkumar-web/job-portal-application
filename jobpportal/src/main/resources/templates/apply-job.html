@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="'Apply for ' + ${job.title}">Apply for Job</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+</head>
+<body>
+<h2 th:text="'Apply for &quot;' + ${job.title} + '&quot;'">Apply for Job Title</h2>
+<p><strong>Description:</strong></p>
+<p th:text="${job.description}">Job Description</p>
+<p>Posted by: <span th:text="${job.postedBy.username}">Admin User</span></p>
+
+
+<form th:action="@{/user/apply/{jobId}(jobId=${job.id})}" method="post" th:object="${application}">
+    <div>
+        <label for="coverLetter">Cover Letter (Optional):</label>
+        <textarea id="coverLetter" name="coverLetter" th:field="*{coverLetter}" rows="8" cols="50"></textarea>
+    </div>
+    <div>
+        <button type="submit">Submit Application</button>
+    </div>
+</form>
+
+<p><a th:href="@{/user/view-jobs}">Back to All Jobs</a></p>
+<form th:action="@{/logout}" method="post">
+    <button type="submit">Logout</button>
+</form>
+</body>
+</html>
